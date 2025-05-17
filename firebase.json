@@ -1,0 +1,10 @@
+{
+  "hosting": {
+    "public": "jupiterstorm.net/public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}

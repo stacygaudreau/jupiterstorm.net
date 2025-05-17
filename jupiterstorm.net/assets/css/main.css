@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,500;1,400;1,500&display=swap');
+@import "tailwindcss";
+@source "hugo_stats.json";
+
+@font-face {
+    font-family: Dense;
+    font-style: normal;
+    font-weight: 100 400 700;
+    font-display: swap;
+    src: url("/fonts/Dense-Regular.otf") format("opentype");
+}
+
+.btn-trapezoid {
+    position: relative;
+    display: inline-block;
+    clip-path: polygon(10% 0%, 90% 0%, 100% 50%, 90% 100%, 10% 100%, 0% 50%);
+    color: white;
+    padding: .75rem 3rem;
+    z-index: 0;
+}
+
+.btn-trapezoid-wrapper {
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.5));
+}
+
+.chevron-left, .chevron-right {
+    display: inline-block;
+    width: 47px;
+    height: 45px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+.chevron-left {
+    background-image: url("/img/chevron-left.svg");
+}
+
+.chevron-right {
+    background-image: url("/img/chevron-right.svg");
+}
+
+@theme {
+    --font-sans: "Barlow Condensed", sans-serif;
+    --font-heading: "Dense", sans-serif;
+    --font-display: "Barlow Condensed", sans-serif;
+    --color-bg-1: #0D0D1F;
+    --color-bg-2: #1B151F;
+    --color-highlight: #EF6D73;
+    --color-highlight-2: #f3989c;
+}
+
