@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {{ partialCached "meta.html" . }}
     <title>{{ block "title " . }}{{ .Site.Title }}{{ end }}</title>
     {{ partialCached "css.html" . }}
 </head>
-<body class="flex flex-col bg-bg-1">
+<body class="flex flex-col bg-bg-1 w-full">
     {{ block "main" . }}
     {{ end }}
-    {{ block "footer" . }}
-    {{ end }}
+    {{ partial "footer.html" . }}
+    {{ partial "scripts.html" . }}
 </body>
 </html>

@@ -2,5 +2,8 @@
   "devDependencies": {
     "@tailwindcss/cli": "^4.1.7",
     "tailwindcss": "^4.1.7"
+  },
+  "dependencies": {
+    "wavesurfer.js": "^7.9.5"
   }
 }
