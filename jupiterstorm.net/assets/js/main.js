@@ -59,38 +59,57 @@ const initCaptcha = () => {
     });
 }
 
+const closeMenu = () => {
+    state.menu.classList.remove('opacity-100');
+    state.menu.classList.add('opacity-0', 'pointer-events-none');
+    state.menuIsOpen = false;
+}
+
+const openMenu = () => {
+    state.menu.classList.remove('opacity-0', 'pointer-events-none');
+    state.menu.classList.add('opacity-100');
+    state.menuIsOpen = true;
+    state.y0 = scrollY;
+}
+
+const initMenu = () => {
+    const menuBtn = document.getElementById('menuBtn');
+    state.menu = document.getElementById('menuOverlay');
+    menuBtn.addEventListener('click', () => {
+        if (state.menuIsOpen)
+            closeMenu();
+        else
+        openMenu();
+});
+    document.addEventListener('click', (e) => {
+        if (!menuBtn.contains(e.target) && !state.menu.contains(e.target))
+            closeMenu();
+    });
+}
+
 // DOM finished loading
 window.addEventListener('DOMContentLoaded', (e) => {
     initialiseAllAudioPreviews();
     initCaptcha();
-    // navBar = document.getElementById('navbar');
-    // window.onscroll = scrollHandler;
-    // HugoContentHelpers.replaceBlockquoteTitles();
-    // HugoContentHelpers.wrapTablesInContainer();
-    // if (scrollY > 0) {
-    //   setScrollTrue();
-    // }
-    // Lightbox.initAll();
-    // toc.init();
+    initMenu();
+    openMenu();
+    window.onscroll = scrollHandler;
 });
 
 
 // page state
 let state = {
-    isScrolled: false,
+    y0: 0,
+    menu: null,
+    menuIsOpen: false,
+    main: null,
 };
-let navBar;
 
-// scroll handling
-function setScrollTrue() {
-    if (!state.isScrolled) navBar.classList.add('navbar--opaque');
-    state.isScrolled = true;
-  }
-  function scrollHandler() {
-    if (scrollY > 0) {
-      setScrollTrue();
-    } else {
-      navBar.classList.remove('navbar--opaque');
-      state.isScrolled = false;
-    }
+const scrollHandler = () => {
+    // close the menu for the user if they have scrolled a bit
+    if (state.menuIsOpen) {
+        const dY = Math.abs(scrollY - state.y0);
+        if (dY > 10) 
+            closeMenu();
+    }    
 }
