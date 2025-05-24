@@ -61,19 +61,20 @@ const initCaptcha = () => {
 
 const closeMenu = () => {
     state.menu.classList.remove('opacity-100');
-    state.menu.classList.add('opacity-0', 'pointer-events-none');
+    state.menu.classList.add('opacity-0', 'pointer-events-none', 'hidden');
+    setTimeout(() => state.menu.classList.add('hidden', 300));
     state.menuIsOpen = false;
 }
 
 const openMenu = () => {
-    state.menu.classList.remove('opacity-0', 'pointer-events-none');
+    state.menu.classList.remove('opacity-0', 'pointer-events-none', 'hidden');
     state.menu.classList.add('opacity-100');
     state.menuIsOpen = true;
     state.y0 = scrollY;
 }
 
 const initMenu = () => {
-    const menuBtn = document.getElementById('menuBtn');
+    state.menuBtn = document.getElementById('menuBtn');
     state.menu = document.getElementById('menuOverlay');
     menuBtn.addEventListener('click', () => {
         if (state.menuIsOpen)
@@ -85,6 +86,7 @@ const initMenu = () => {
         if (!menuBtn.contains(e.target) && !state.menu.contains(e.target))
             closeMenu();
     });
+    updateMenuButtonFromScroll();
 }
 
 // DOM finished loading
@@ -92,9 +94,26 @@ window.addEventListener('DOMContentLoaded', (e) => {
     initialiseAllAudioPreviews();
     initCaptcha();
     initMenu();
-    openMenu();
     window.onscroll = scrollHandler;
 });
+
+const updateMenuButtonFromScroll= () => {
+    const OPACITY_IN_HERO = 50;
+    const HERO_SCROLL_THES = window.innerHeight;
+    const isScrolledInHero = () => scrollY > 2 && scrollY <= HERO_SCROLL_THES;
+    const isScrolledPastHero = () => scrollY > HERO_SCROLL_THES;
+    if (isScrolledInHero()) {
+        state.menuBtn.classList.remove('opacity-0', 'opacity-100', 'pointer-events-none', 'hidden');
+        state.menuBtn.classList.add(`opacity-${OPACITY_IN_HERO}`);
+    } else if (isScrolledPastHero()) {
+        state.menuBtn.classList.remove(`opacity-${OPACITY_IN_HERO}`, 'opacity-100', 'hidden');
+        state.menuBtn.classList.add('opacity-0', 'pointer-events-none');
+    } else {
+        setTimeout(() => state.menu.classList.add('hidden', 300));
+        state.menuBtn.classList.remove(`opacity-${OPACITY_IN_HERO}`, 'opacity-0', 'pointer-events-none');
+        state.menuBtn.classList.add('opacity-100');
+    }
+}
 
 
 // page state
@@ -103,6 +122,7 @@ let state = {
     menu: null,
     menuIsOpen: false,
     main: null,
+    menuBtn: null,
 };
 
 const scrollHandler = () => {
@@ -111,5 +131,6 @@ const scrollHandler = () => {
         const dY = Math.abs(scrollY - state.y0);
         if (dY > 10) 
             closeMenu();
-    }    
+    }   
+    updateMenuButtonFromScroll();
 }

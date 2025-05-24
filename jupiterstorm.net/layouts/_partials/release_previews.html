@@ -1,24 +1,14 @@
-
-{{ define "main" }}
-<!-- HERO CONTENT -->
-<header class="flex flex-col items-center ">
-    <!-- LOGO -->
-    <a href="/" aria-label="Jupiter Storm" class="mt-42 md:mt-32 mx-4 w-64 md:w-96 lg:w-124">
-        <img src="/img/logo-white.svg" alt="Jupiter Storm" class="w-full h-auto select-none">
-    </a>
-</header>
-<!-- LISTEN NOW - MUSIC PREVIEWS -->
-<section class="mt-8 md:mt-12 lg:mt-24">
+<section class="mt-30 md:mt-36">
     <header class="flex gap-4 md:gap-8 sm:pt-8 justify-center items-center font-heading">
         <div class="chevron-left-sm sm:chevron-left"></div>
-        <h1 class="text-5xl sm:text-6xl text-white uppercase text-center select-none">Release Previews</h1>
+        <h1 class="text-5xl sm:text-6xl text-white uppercase text-center select-none">Listen Now</h1>
         <div class="chevron-right-sm sm:chevron-right"></div>
     </header>
     <!-- RELEASE GRID -->
-    <div class="flex flex-wrap gap-8 justify-center py-8 md:mt-4 max-w-280">
+    <div class="flex flex-wrap gap-8 sm:gap-10 justify-center py-8 md:mt-4 max-w-280">
         {{ range (where .Site.Pages "Type" "release") }}
         <div class="flex flex-col shadow-sm-hard">
-            <div class="aspect-square bg-bg-3 w-75 md:w-56">
+            <div class="aspect-square bg-bg-3 w-75">
                 {{/*  mobile: 300px md+: 224px  */}}
                 <img {{ with .Resources.GetMatch "images/cover.*" }} src="{{.RelPermalink}}" {{ end }}  
                         alt="{{.Title}} album art" srcset="" class="w-full h-full object-cover">
@@ -35,5 +25,3 @@
         {{ end }}
     </div>
 </section>
-<!-- MEDIA FEED -->
-{{ end }}

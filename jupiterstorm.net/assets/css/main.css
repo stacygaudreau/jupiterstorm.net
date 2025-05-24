@@ -107,6 +107,10 @@ button {
     height: 25px;
 }
 
+p:not(:last-of-type) {
+    margin-bottom: .75rem;
+}
+
 @theme {
     --font-sans: "Barlow Condensed", sans-serif;
     --font-heading: "Dense-Thin", sans-serif;

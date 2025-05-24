@@ -1,176 +1,34 @@
 {{ define "main" }}
-<!-- Background image and gradient fill -->
-<!-- mobile bg -->
-<div class="block lg:hidden absolute top-0 left-0 w-full h-173 -z-10 bg-center bg-cover bg-no-repeat"
-     style="background-image: linear-gradient(to bottom, #0d0d1f9a 0%,  rgba(0, 0, 0, 0) 25%, 
-                                           rgba(0, 0, 0, 0) 45%, #0D0D1F 100%), url('/img/hero-bg-sm.png');">
-
-</div>
-<!-- desktop bg -->
-<div class="hidden lg:block absolute top-0 left-0 w-full h-[100dvh] -z-10 bg-center bg-cover bg-no-repeat"
-     style="background-image: linear-gradient(to bottom, #0d0d1f80 0%, rgba(0, 0, 0, 0) 10%,
-                                            rgba(0, 0, 0, 0) 30%, #0D0D1F 100%), url('/img/hero-bg.png');">
-</div>
-<!-- NAV -->
-<nav>
-    <button id="menuBtn" class="focus:outline-none fixed top-4 left-4 md:top-8 md:left-8 z-30">
-        <img src="/img/i-menu.svg" alt="menu button" srcset="">
-    </button>
-    <menu id="menuOverlay" class="fixed top-0 left-0 md:top-7 md:left-7 z-20 w-full h-120 md:w-50 md:h-100 bg-bg-4 text-white flex flex-col justify-center items-center
-                                  gap-6 sm:gap-4 text-4xl md:text-3xl transition-opacity duration-100 shadow-sm-hard opacity-0">
-        <a href="/" class="hover:underline uppercase font-heading font-bold select-none">Home</a>
-        <a href="#releases" class="hover:underline uppercase font-heading font-bold select-none">Releases</a>
-        <!--<a href="#feed" class="hover:underline uppercase font-heading font-bold">Feed</a>-->
-        <a href="#about" class="hover:underline uppercase font-heading font-bold select-none">About</a>
-        <a href="#contact" class="hover:underline uppercase font-heading font-bold select-none">Contact</a>
-    </menu>
-</nav>
-<!-- MAIN CONTENT -->
-<main class="relative z-10 mx-4 md:mx-16 lg:mx-32 self-center max-w-360" id="main">
-    <!-- HERO CONTENT -->
-    <header class="flex flex-col items-center ">
-        <!-- LOGO -->
-        <a href="/" aria-label="Jupiter Storm" class="mt-42 md:mt-32 mx-4 w-82 md:w-110 lg:w-124">
-            <img src="/logo.svg" alt="Jupiter Storm" class="w-full h-auto select-none">
-        </a>
-        <!-- CTA -->
-        <div class="mt-16 font-button uppercase text-2xl">
-            <div class="shadow-sm-hard">
-                <a href="#contact" class="inline-block px-6 py-3 font-bold text-white bg-highlight 
-                                    hover:bg-highlight-2 transition btn-trapezoid select-none">
-                    Book Me
-                </a>
-            </div>
+<!-- HERO CONTENT -->
+<header class="flex flex-col items-center ">
+    <!-- LOGO -->
+    <a href="/" aria-label="Jupiter Storm" class="mt-42 md:mt-32 mx-4 w-82 md:w-110 lg:w-124">
+        <img src="/logo.svg" alt="Jupiter Storm" class="w-full h-auto select-none">
+    </a>
+    <!-- CTA -->
+    <div class="mt-16 font-button uppercase text-2xl">
+        <div class="shadow-sm-hard">
+            <a href="#contact" class="inline-block px-6 py-3 font-bold text-white bg-highlight 
+                                hover:bg-highlight-2 transition btn-trapezoid select-none">
+                Book Me
+            </a>
         </div>
+    </div>
+</header>
+<!-- LISTEN NOW - MUSIC PREVIEWS -->
+{{ partial "release_previews.html" . }}
+<!-- ABOUT -->
+<section class="mt-8 flex flex-col items-center" id="about">
+    {{ with .Site.GetPage "about.md" }}
+    <header class="flex gap-2 md:gap-8 pt-8 justify-center items-center font-heading">
+        <div class="chevron-left-sm sm:chevron-left"></div>
+        <h1 class="text-5xl md:text-5xl text-gray-300 font-normal uppercase text-center select-none">{{ .Params.titleText | safeHTML }}</h1>
+        <div class="chevron-right-sm sm:chevron-right"></div>
     </header>
-    <!-- LISTEN NOW - MUSIC PREVIEWS -->
-    <section class="mt-30 md:mt-36">
-        <header class="flex gap-4 md:gap-8 sm:pt-8 justify-center items-center font-heading">
-            <div class="chevron-left-sm sm:chevron-left"></div>
-            <h1 class="text-5xl sm:text-6xl text-white uppercase text-center select-none">Listen Now</h1>
-            <div class="chevron-right-sm sm:chevron-righ"></div>
-        </header>
-        <!-- RELEASE GRID -->
-        <div class="flex flex-wrap gap-8 justify-center py-8 md:mt-4 max-w-280">
-            {{ range (where .Site.Pages "Type" "release") }}
-            <div class="flex flex-col shadow-sm-hard">
-                <div class="aspect-square bg-bg-3 w-75 md:w-56">
-                    {{/*  mobile: 300px md+: 224px  */}}
-                    <img {{ with .Resources.GetMatch "images/cover.*" }} src="{{.RelPermalink}}" {{ end }}  
-                            alt="{{.Title}} album art" srcset="" class="w-full h-full object-cover">
-                </div> 
-                <div class="flex gap-4 bg-highlight-dark p-4 items-center w-full">
-                    <button class="btn-play w-12 h-12 rounded-full inline-flex bg-highlight items-center justify-center">
-                        <div class="icon-play"></div>
-                    </button>
-                    <div class="flex items-center grow">
-                        <div class="w-full waveform" data-url="{{ .Params.previewUrl }}"></div>
-                    </div>
-                </div>
-            </div>
-            {{ end }}
-        </div>
-    </section>
-    <!-- ABOUT -->
-    <section class="mt-8 flex flex-col items-center">
-        <header class="flex gap-2 md:gap-8 pt-8 justify-center items-center font-heading">
-            <div class="chevron-left-sm sm:chevron-left"></div>
-            <h1 class="text-5xl md:text-5xl text-gray-300 font-normal uppercase text-center select-none">About Jupiter Storm</h1>
-            <div class="chevron-right-sm sm:chevron-righ"></div>
-        </header>
-        <div class="max-w-225 font-display text-xl text-white mt-4 mb-8 text-center mx-8">
-            <p class="mb-3">Jupiter Storm is the sonic vision of Stacy Gaudreau, a Canadian psytrance artist with a deep love for electronic music.</p>
-            <p class="mb-3">After years spent designing hardware modular synthesizers which shaped the music world, he's now bringing Jupiter Storm's hypnotic, high-energy melodic grooves to festival dancefloors.</p>
-            <p>With a fusion of technical obsession and raw creative energy, Jupiter Storm is producing and releasing a fresh sound that's sure to light up the festival scene.</p>
-        </div>
-    </section>
-    <!-- MEDIA FEED -->
-    <!-- STREAM/SOCIALS -->
-    <section class="mt-8">
-        <header class="flex gap-4 md:gap-8 pt-8 justify-center items-center font-heading">
-            <div class="chevron-left-sm sm:chevron-left"></div>
-            <h1 class="text-5xl text-gray-300 font-normal uppercase text-center select-none">Stream & Follow</h1>
-            <div class="chevron-right-sm sm:chevron-right"></div>
-        </header>
-        <div class="max-w-225 flex flex-wrap items-center justify-center gap-12 mt-12 mb-8 mx-8 md:mx-32">
-            <a href="">
-                <img src="/img/i-spotify.svg" alt="Spotify logo" srcset="">
-            </a>
-            <a href="">
-                <img src="/img/i-soundcloud.svg" alt="Soundcloud logo" srcset="">
-            </a>
-            <a href="">
-                <img src="/img/i-insta.svg" alt="Instagram logo" srcset="">
-            </a>
-            <a href="">
-                <img src="/img/i-apple.svg" alt="Apple Music logo" srcset="">
-            </a>
-            <a href="">
-                <img src="/img/i-deezer.svg" alt="Deezer Music logo" srcset="">
-            </a>
-            <a href="">
-                <img src="/img/i-bandcamp.svg" alt="Bandcamp logo" srcset="">
-            </a>
-            <a href="">
-                <img src="/img/i-beatport.svg" alt="Beatport logo" srcset="">
-            </a>
-            <a href="">
-                <img src="/img/i-discogs.svg" alt="Discogs logo" srcset="">
-            </a>
-        </div>
-    </section>
-    <!-- CONTACT FORM -->
-    <section class="mt-16">
-        <header class="flex gap-4 md:gap-8 pt-8 justify-center items-center font-heading">
-            <div class="chevron-left-sm sm:chevron-left"></div>
-            <h1 class="text-5xl text-gray-300 font-normal uppercase text-center text-nowrap select-none" 
-                id="contact">Contact / Booking</h1>
-            <div class="chevron-right-sm sm:chevron-right"></div>
-        </header>
-        <div class="max-w-225 flex flex-col grow items-center justify-center gap-12 mt-8 mb-8 mx-4 sm:mx-16">
-            <form class="space-y-8 w-full flex flex-col" action="https://api.web3forms.com/submit" method="POST" id="contact-form">
-                <p class="font-light text-center text-xl text-gray-300">Are you a festival promoter, artist looking to collab, or label? Reach out and get in touch!</p>
-                <input type="hidden" name="access_key" value="96542dab-f3b3-4aea-a5a7-d7dbe5444ec7" />
-                <input type="hidden" name="subject" value="New contact form submission from Jupiter Storm's website" />
-                <input type="hidden" name="from_name" value="jupiterstorm.net" />
-                <div class="">
-                    <label for="email" class=" mb-2 text-lg  text-gray-300">Email</label>
-                    <input type="email" name="email" id="email" class="shadow-sm border border-gray-600 focus:border-highlight text-white text-md focus:outline-2
-                              w-full p-2.5 bg-bg-4 placeholder-gray-400 shadow-sm-light"
-                             placeholder="Your email address" required>
-                </div>
-                <div class="">
-                    <label for="name" class=" mb-2 text-lg  text-gray-300">Name</label>
-                    <input type="text" name="name" id="name" class="shadow-sm  border border-gray-600 focus:border-highlight text-white text-md focus:outline-2
-                                 w-full p-2.5 bg-bg-4 placeholder-gray-400 shadow-sm-light" placeholder="Your name" required>
-                </div>
-                <div class="">
-                    <label for="subject" class=" mb-2 text-lg  text-gray-300">Subject</label>
-                    <input type="text" id="subject" name="message_subject" class="p-3 w-full text-md 
-                        border border-gray-600 focus:border-highlight focus:outline-1 shadow-sm bg-bg-4  placeholder-gray-400 
-                        text-white shadow-sm-light" placeholder="Subject line" required>
-                </div>
-                <div class="">
-                    <label for="message" class=" mb-2 text-lg  text-gray-300">Message</label>
-                    <textarea id="message" name="message" rows="6" class="p-2.5 w-full text-md  shadow-sm 
-                        border border-gray-600 focus:border-highlight focus:outline-1 bg-bg-4 placeholder-gray-400 text-white" 
-                        placeholder="Write your message..."></textarea>
-                </div>
-                <div class="h-captcha self-center mt-2" data-captcha="true"></div>
-                <div class="mt-2 self-center">
-                    <div class="shadow-sm-hard">
-                        <button type="submit" class="inline-block px-6 py-3 w-50 font-bold text-white
-                                bg-highlight hover:bg-highlight-2 transition btn-trapezoid font-button text-2xl uppercase" >
-                            Send
-                        </button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </section>
-    <!-- FOOTER -->
-    <section class="mt-16">
-        
-    </section>
-</main>
+    <div class="max-w-225 font-display text-xl text-white mt-4 mb-8 text-center mx-8">
+        {{ .Content }}
+    </div>
+    {{ end }}
+</section>
+<!-- MEDIA FEED -->
 {{ end }}
