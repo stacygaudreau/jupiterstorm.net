@@ -34,6 +34,11 @@ const initialiseAllAudioPreviews = () => {
         });
         wavesurfers[i].on('play', () => {
             playPauseIcon.className = 'icon-pause';
+            // stop all other players
+            wavesurfers.forEach((w, j) => {
+                if (i !== j)
+                    w.stop();
+            });
         });
         wavesurfers[i].on('pause', () => {
             playPauseIcon.className = 'icon-play';
@@ -43,8 +48,8 @@ const initialiseAllAudioPreviews = () => {
             // -> the player's callbacks trigger the button to change
             wavesurfers[i].playPause();
         });
-    })
-} 
+    });
+}
 
 // attach captcha validation to contact form
 const initCaptcha = () => {

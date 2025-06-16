@@ -11,5 +11,3 @@ Design work by [Papernoise Design](https://www.papernoise.net/)
 - HTML, CCS (Tailwind), JavaScript
 - [WaveSurfer.js](https://github.com/katspaugh/wavesurfer.js) for the embedded audio previews 
 - [Web3Forms](https://web3forms.com/) for the serverless contact form w. captcha
-
-
