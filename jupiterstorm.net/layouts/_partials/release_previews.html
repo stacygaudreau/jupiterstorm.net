@@ -10,7 +10,7 @@
         <div class="flex flex-col shadow-sm-hard">
             <div class="aspect-square bg-bg-3 w-75">
                 {{/*  mobile: 300px md+: 224px  */}}
-                <img {{ with .Resources.GetMatch "images/cover.*" }} src="{{.RelPermalink}}" {{ end }}  
+                <img {{ with .Resources.GetMatch "images/cover*.*" }} src="{{.RelPermalink}}" {{ end }}  
                         alt="{{.Title}} album art" srcset="" class="w-full h-full object-cover">
             </div> 
             <div class="flex gap-4 bg-highlight-dark p-4 items-center w-full">
