@@ -1,27 +1,27 @@
 <section class="mt-30 md:mt-36">
     <header class="flex gap-4 md:gap-8 sm:pt-8 justify-center items-center font-heading">
         <div class="chevron-left-sm sm:chevron-left"></div>
-        <h1 class="text-5xl sm:text-6xl text-white uppercase text-center select-none">Listen Now</h1>
+        <h1 class="text-5xl sm:text-6xl text-white uppercase text-center select-none">Latest Releases</h1>
         <div class="chevron-right-sm sm:chevron-right"></div>
     </header>
     <!-- RELEASE GRID -->
     <div class="flex flex-wrap gap-8 sm:gap-10 justify-center py-8 md:mt-4 max-w-280">
         {{ range (where .Site.Pages "Type" "release") }}
-        <div class="flex flex-col shadow-sm-hard">
-            <div class="aspect-square bg-bg-3 w-75">
-                {{/*  mobile: 300px md+: 224px  */}}
-                <img {{ with .Resources.GetMatch "images/cover*.*" }} src="{{.RelPermalink}}" {{ end }}  
-                        alt="{{.Title}} album art" srcset="" class="w-full h-full object-cover">
-            </div> 
-            <div class="flex gap-4 bg-highlight-dark p-4 items-center w-full">
-                <button class="btn-play w-12 h-12 rounded-full inline-flex bg-highlight items-center justify-center">
-                    <div class="icon-play"></div>
-                </button>
-                <div class="flex items-center grow">
-                    <div class="w-full waveform" data-url="{{ .Params.previewUrl }}"></div>
-                </div>
+        <a href="{{ .Params.landingPageUrl }}" class="hover:outline-2 hover:outline-highlight">
+            <div class="flex flex-col shadow-sm-hard">
+                <div class="aspect-square bg-bg-3 w-75">
+                    {{/*  mobile: 300px md+: 224px  */}}
+                    {{ with .Params.releaseDate }}
+                        <div class="coming-soon absolute bottom-4 left-4 bg-highlight-2 px-2 text-lg opacity-75 rounded-xs font-heading font-bold"
+                            data-release-date="{{ . }}">
+                            COMING SOON!
+                        </div>
+                    {{ end }}
+                    <img {{ with .Resources.GetMatch "images/cover*.*" }} src="{{.RelPermalink}}" {{ end }}  
+                            alt="{{.Title}} album art" srcset="" class="w-full h-full object-cover">
+                </div> 
             </div>
-        </div>
+        </a>
         {{ end }}
     </div>
 </section>

@@ -10,28 +10,71 @@
 <!-- LISTEN NOW - MUSIC PREVIEWS -->
 <section class="mt-8 md:mt-12 lg:mt-24">
     <header class="flex gap-4 md:gap-8 sm:pt-8 justify-center items-center font-heading">
-        <div class="chevron-left-sm sm:chevron-left"></div>
-        <h1 class="text-5xl sm:text-6xl text-white uppercase text-center select-none">Release Previews</h1>
-        <div class="chevron-right-sm sm:chevron-right"></div>
+        <h1 class="text-5xl font-bold sm:text-6xl text-white uppercase text-center select-none">
+            {{ if eq .Section "releases"}}
+                Releases
+            {{ else if eq .Section "artists" }}
+                Artists
+            {{ end }}
+        </h1>
     </header>
-    <!-- RELEASE GRID -->
-    <div class="flex flex-wrap gap-8 justify-center py-8 md:mt-4 max-w-280">
-        {{ range (where .Site.Pages "Type" "release") }}
-        <div class="flex flex-col shadow-sm-hard">
-            <div class="aspect-square bg-bg-3 w-75 md:w-56">
-                {{/*  mobile: 300px md+: 224px  */}}
-                <img {{ with .Resources.GetMatch "images/cover.*" }} src="{{.RelPermalink}}" {{ end }}  
-                        alt="{{.Title}} album art" srcset="" class="w-full h-full object-cover">
-            </div> 
-            <div class="flex gap-4 bg-highlight-dark p-4 items-center w-full">
-                <button class="btn-play w-12 h-12 rounded-full inline-flex bg-highlight items-center justify-center">
-                    <div class="icon-play"></div>
-                </button>
-                <div class="flex items-center grow">
-                    <div class="w-full waveform" data-url="{{ .Params.previewUrl }}"></div>
+    <!-- LIST ITEMS -->
+    <div class="mt-16 md:mt-32 flex flex-col gap-8">
+        {{ if eq .Section "releases" }}
+            <!-- RELEASE CARD -->
+            {{ range (where .Site.Pages "Type" "release") }}
+                <div class="flex gap-8 flex-wrap md:flex-nowrap  bg-bg-4 p-4 md:p-6 mx-0 md:mx-8 flex-col md:flex-row md:items-stretch min-h-83">
+                    <!-- COVER IMAGE -->
+                    <a href="{{ .Params.landingPageUrl }}" class="hover:outline-2 hover:outline-highlight self-center md:self-start mt-4 md:mt-0">
+                        <div class="flex flex-col shadow-sm-hard">
+                            <div class="aspect-square bg-bg-3 h-75">
+                                {{/*  mobile: 300px md+: 224px  */}}
+                                {{ with .Params.releaseDate }}
+                                    <div class="coming-soon absolute bottom-4 left-4 bg-highlight-2 px-2 text-lg opacity-75 rounded-xs font-heading font-bold"
+                                        data-release-date="{{ . }}">
+                                        COMING SOON!
+                                    </div>
+                                {{ end }}
+                                <img {{ with .Resources.GetMatch "images/cover*.*" }} src="{{.RelPermalink}}" {{ end }}  
+                                        alt="{{.Title}} album art" srcset="" class="w-full h-full object-cover">
+                            </div> 
+                        </div>
+                    </a>
+                    <!-- RELEASE INFO COLUMN -->
+                    <section class="flex flex-col text-center md:text-left flex-1 justify-between">
+                        <!-- TITLE/ARTIST/DESCRIPTION -->
+                        <div class="">
+                            <h2 class="font-heading font-bold text-3xl text-white uppercase">{{ .Params.title }}</h2>
+                            <h3 class="font-body text-2xl text-gray-400 uppercase">{{ .Params.artist }}</h3>
+                            <div class="text-gray-300 text-2xl/7 mt-4">
+                                {{ .Content }}
+                            </div>
+                        </div>
+                        <!-- BOTTOM ROW -->
+                        <div class="flex gap-4 justify-between flex-wrap text-center flex-col md:flex-row mt-6">
+                            <div class="text-2xl text-white items-center md:items-start flex-col flex">
+                                <div class="flex gap-2 items-center">
+                                    <span class="font-bold">Date</span>
+                                    <span class="">
+                                        {{ $t := time.AsTime .Params.releaseDate }}
+                                        {{ time.Format "2 Jan 2006" $t }}
+                                    </span>
+                                </div>
+                                <div class="flex gap-2 items-center">
+                                    <span class="font-bold">Type</span>
+                                    <span class="capitalize">{{ .Params.releaseType }}</span>
+                                </div>
+                            </div>
+                            <div class="shadow-sm-hard">
+                                <a href="{{ .Params.landingPageUrl }}" class="inline-block px-6 py-2 mb-4 md:mb-0 mt-4 md:mr-2 font-button font-bold text-2xl text-white uppercase bg-highlight 
+                                    hover:bg-highlight-2 transition select-none">
+                                    Listen Now
+                                </a>
+                            </div>
+                        </div>
+                    </section>
                 </div>
-            </div>
-        </div>
+            {{ end }}
         {{ end }}
     </div>
 </section>

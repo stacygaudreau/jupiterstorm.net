@@ -94,8 +94,19 @@ const initMenu = () => {
     updateMenuButtonFromScroll();
 }
 
+// update release dates etc. on release elements
+const updateReleases = () => {
+    document.querySelectorAll('.coming-soon[data-release-date]').forEach(e => {
+        // console.log
+        if (Date.now() >= new Date(e.dataset.releaseDate).getTime()) {
+            e.remove();
+        }
+    });
+}
+
 // DOM finished loading
 window.addEventListener('DOMContentLoaded', (e) => {
+    updateReleases();
     initialiseAllAudioPreviews();
     initCaptcha();
     initMenu();

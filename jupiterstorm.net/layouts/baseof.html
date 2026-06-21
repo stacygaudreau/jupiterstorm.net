@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {{ partialCached "meta.html" . }}
+    {{ partial "meta.html" . }}
+    {{ partial "umami.html" . }}
     <title>{{ block "title " . }}{{ .Site.Title }}{{ end }}</title>
-    {{ partialCached "css.html" . }}
+    {{ partial "css.html" . }}
 </head>
 <body class="flex flex-col bg-bg-1 w-full">
     <!-- BG & GRADIENT-->

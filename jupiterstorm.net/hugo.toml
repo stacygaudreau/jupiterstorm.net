@@ -2,6 +2,17 @@ baseURL = 'https://jupiterstorm.net'
 languageCode = 'en-us'
 title = 'Jupiter Storm | Psytrance Musician'
 
+[params.umami]
+  enabled = true
+  # umami cloud
+  src = "https://us.umami.is/script.js"   # or the region-specific script URL
+  websiteId = "ab54124e-ca30-40be-a4d6-e161436130a8"
+  # # (optional settings)
+  # dataDomains = "example.com,www.example.com"
+  # autoTrack = true
+  # outboundLinks = true
+  # respectDNT = true
+
 [build]
   [build.buildStats]
     enable = true

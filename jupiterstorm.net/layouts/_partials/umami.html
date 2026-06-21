@@ -1,0 +1,12 @@
+{{- $p := .Site.Params.umami -}}
+{{- if and hugo.IsProduction $p.enabled $p.src $p.websiteId -}}
+<script
+  defer
+  src="{{ $p.src }}"
+  data-website-id="{{ $p.websiteId }}"
+  {{- with $p.dataDomains }} data-domains="{{ . }}"{{ end -}}
+  {{- if not (isset $p "autoTrack") }}{{ else if eq $p.autoTrack false }} data-auto-track="false"{{ end -}}
+  {{- if $p.outboundLinks }} data-outbound-links="true"{{ end -}}
+  {{- if $p.respectDNT }} data-do-not-track="true"{{ end -}}
+></script>
+{{- end -}}
